@@ -1,0 +1,29 @@
+services:
+  mongodb:
+    image: 'mongo:latest'
+    networks:
+      - main
+    volumes:
+      - ./db:/data/db
+    ports:
+      - "27017:27017"
+
+  client:
+    build: ./client
+    networks:
+      - main
+    ports:
+      - "3000:80"
+    volumes:
+      - ./client:/home
+
+  server:
+    build: ./server
+    networks:
+      - main
+    ports:
+      - "3001:80"
+
+networks:
+  main:
+    name: main_network

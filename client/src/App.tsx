@@ -5,6 +5,9 @@ function App() {
 
   return (
     <>
+      <div className="header">
+        <Text fw={"bold"}>Note the point</Text>
+      </div>
       <Container p={30}>
 
         <Grid p={30}>

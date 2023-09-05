@@ -7,9 +7,12 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import Placeholder from '@tiptap/extension-placeholder'
-import { Dispatch, SetStateAction, useEffect } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-export default function Editor({ content, setContent }: { content: string | undefined, setContent: Dispatch<SetStateAction<string>> }) {
+export default function Editor({ content, setContent, editable = true }: { content: string | undefined, setContent: Dispatch<SetStateAction<string>>, editable?: boolean }) {
+
+    const [allowEdit, setAllowEdit] = useState(editable);
+
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -22,12 +25,20 @@ export default function Editor({ content, setContent }: { content: string | unde
             Placeholder.configure({ placeholder: 'Start typing your note content' })
         ],
         content,
+        editable: allowEdit
     });
 
     useEffect(() => {
-        setContent(editor?.getHTML() || "");
-    }, [editor?.getHTML()])
+        setAllowEdit(editable);
+    }, [editable])
 
+    useEffect(() => {
+        setContent(editor?.getHTML() || "");
+    }, [editor?.getHTML()]);
+
+    const toggleEditable = () => setAllowEdit(e => !e);
+
+    editor?.on("update", (e) => console.log(e))
 
     return <RichTextEditor editor={editor}>
         {editor && <BubbleMenu editor={editor}>
@@ -39,8 +50,12 @@ export default function Editor({ content, setContent }: { content: string | unde
                 <RichTextEditor.H2 />
                 <RichTextEditor.H3 />
                 <RichTextEditor.H4 />
+                <RichTextEditor.AlignLeft />
+                <RichTextEditor.AlignCenter />
+                <RichTextEditor.AlignJustify />
+                <RichTextEditor.AlignRight />
             </RichTextEditor.ControlsGroup>
         </BubbleMenu>}
-        <RichTextEditor.Content />
+        <RichTextEditor.Content onClick={toggleEditable} />
     </RichTextEditor>
 }

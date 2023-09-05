@@ -5,13 +5,11 @@ import Editor from "../Editor";
 
 export default function NoteView({ noteid }: { noteid: string }) {
 
-    console.log(noteid)
-
     const [content, setContent] = useState("");
     const [edit, setEdit] = useState(true);
-    const [title, setTitle] = useState("")
+    const [title, setTitle] = useState("");
 
-    return <Box sx={{ paddingTop: "25px" }}>
+    return <Box>
         <Textarea
             placeholder="Note the point"
             onKeyDown={(e) => {
@@ -22,7 +20,7 @@ export default function NoteView({ noteid }: { noteid: string }) {
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             autosize
-            py={10}
+            pb={10}
             sx={{ textarea: { margin: 0, padding: 0, fontSize: "2rem", fontWeight: "bold", border: "none", backgroundColor: "transparent" } }}
         ></Textarea>
 

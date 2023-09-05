@@ -1,22 +1,37 @@
-import { Container, Grid, Text } from "@mantine/core"
-import NoteView from "./componets/NoteView"
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import HomePage from "./pages/Home";
+import { Container } from '@mantine/core';
+import EditNotePage from './pages/EditNote/EditNote';
+import { useGetNotesQuery } from './lib/api/noteApi';
+import { useAppDispatch } from './lib/redux/hooks';
+import { useEffect } from 'react';
+import { addNodeAllAttach, setNoteLoading } from './lib/redux/slices/noteSlice';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />
+  },
+  {
+    path: '/edit/:id',
+    element: <EditNotePage />
+  }
+])
 
 function App() {
 
-  return (
-    <>
-      <Container p={30}>
+  const { data, isLoading } = useGetNotesQuery({});
+  const dispatch = useAppDispatch();
 
-        <Grid p={30}>
-          <Grid.Col span={6}>
-            <NoteView noteid="noteid" />
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <NoteView noteid="noteid" />
-          </Grid.Col>
-        </Grid>
-      </Container>
-    </>
+  useEffect(() => {
+    dispatch(addNodeAllAttach(data));
+    dispatch(setNoteLoading(isLoading))
+  }, [data, isLoading])
+
+  return (
+    <Container p={30}>
+      <RouterProvider router={router} />
+    </Container>
   )
 }
 

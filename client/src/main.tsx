@@ -3,6 +3,8 @@ import App from './App.tsx'
 import "./index.scss";
 import { useFullscreen, useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from "@mantine/core";
+import store from './lib/redux/store.ts';
+import { Provider } from "react-redux";
 
 const Main = () => {
   /**
@@ -43,7 +45,9 @@ const Main = () => {
         withGlobalStyles
         withNormalizeCSS
       >
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

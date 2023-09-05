@@ -19,7 +19,6 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-
   const { data, isLoading } = useGetNotesQuery({});
   const dispatch = useAppDispatch();
 

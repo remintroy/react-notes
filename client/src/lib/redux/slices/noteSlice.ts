@@ -38,6 +38,11 @@ const noteSlice = createSlice({
             newstate[action?.payload?.noteid].body = action.payload?.body;
             state.data = newstate;
         },
+        updateNoteCategory: (state, action) => {
+            const newstate = state.data;
+            newstate[action?.payload?.noteid].category = action.payload?.category;
+            state.data = newstate;
+        },
         updateNote: (state, action) => {
             state.data = { ...state.data, [action.payload?.noteid]: action.payload }
         },
@@ -57,5 +62,5 @@ const noteSlice = createSlice({
     }
 })
 
-export const { addNote, addNoteAll, deleteNote, updateNote, updateNoteBody, updateNoteTitle, addNodeAllAttach, setNoteLoading } = noteSlice.actions
+export const { addNote, addNoteAll, deleteNote, updateNote, updateNoteBody, updateNoteTitle, addNodeAllAttach, setNoteLoading, updateNoteCategory } = noteSlice.actions
 export default noteSlice.reducer

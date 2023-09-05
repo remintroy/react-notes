@@ -26,7 +26,7 @@ export default function HomePage() {
     return <Box>
         <Paper>
             <Flex align={"center"} justify={"space-between"}>
-                <Text fz={"lg"} fw={'bold'}>   Note It {"(beta)"} </Text>
+                <Text fz={"lg"} fw={'bold'}>   N4-Note {"(beta)"} </Text>
                 <Flex align={"center"} gap={10}>
                     <Button leftIcon={< IconPlus size="1rem" />} onClick={handleCreateNote}>New note</Button>
                     <Button variant="default">Login</Button>

@@ -10,6 +10,10 @@ export default class NoteRepositoryImpl implements NoteRepository {
     return NoteModel.findOne({ noteid, deleted: false });
   }
 
+  getAll(): Promise<Note[]> {
+    return NoteModel.find({ deleted: false });
+  }
+
   edit(noteid: string, data: Note) {
     return NoteModel.findOneAndUpdate({ noteid }, { $set: data });
   }

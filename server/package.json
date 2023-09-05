@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec \"esbuild --bundle --platform=node --log-level=error --outdir=build src/index.ts && node build/index.js\" src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "esbuild --bundle --platform=node --outdir=build src/index.ts"
   },
   "keywords": [],
   "author": "",

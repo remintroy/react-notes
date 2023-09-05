@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { Note } from "./noteSlice"
 
 interface EditorInitalState {
     editor: {
-        data: Note | null,
+        noteid: string | null,
         open: boolean,
     }
     saved: boolean;
@@ -11,7 +10,7 @@ interface EditorInitalState {
 
 const initialState: EditorInitalState = {
     editor: {
-        data: null,
+        noteid: null,
         open: false,
     },
     saved: false
@@ -25,10 +24,10 @@ const editorSlice = createSlice({
             state.editor = action.payload;
         },
         openEditor: (state, action) => {
-            state.editor = { data: action.payload, open: true }
+            state.editor = { noteid: action.payload, open: true }
         },
         closeEditor: (state) => {
-            state.editor = { data: null, open: false }
+            state.editor = { noteid: null, open: false }
         },
         setEditorSaved: (state, action) => {
             state.saved = action.payload;

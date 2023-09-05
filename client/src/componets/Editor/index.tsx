@@ -7,9 +7,9 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import Placeholder from '@tiptap/extension-placeholder'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function Editor({ content, setContent, editable = true }: { content: string | undefined, setContent: Dispatch<SetStateAction<string>>, editable?: boolean }) {
+export default function Editor({ content, setContent, editable = true }: { content: string | undefined, setContent: any, editable?: boolean }) {
 
     const [allowEdit, setAllowEdit] = useState(editable);
 
@@ -33,12 +33,12 @@ export default function Editor({ content, setContent, editable = true }: { conte
     }, [editable])
 
     useEffect(() => {
-        setContent(editor?.getHTML() || "");
-    }, [editor?.getHTML()]);
+        setContent(editor?.getJSON() || "");
+    }, []);
 
     const toggleEditable = () => setAllowEdit(e => !e);
 
-    editor?.on("update", (e) => console.log(e))
+    editor?.on("update", () => setContent(editor?.getJSON() || {}));
 
     return <RichTextEditor editor={editor}>
         {editor && <BubbleMenu editor={editor}>

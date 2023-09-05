@@ -10,28 +10,14 @@ export interface Note {
 }
 
 interface InitalState {
-    data: Note[],
+    data: Record<string, Note>,
     error: boolean;
     loading: boolean;
 }
 
 const initialState: InitalState = {
-    data: [{
-        title: "Hey you know what... ",
-        noteid: "somerandomid",
-        body: {},
-        category: ["categoryone", "categoryone", "categoryone", "categoryone"],
-        createdAt: new Date().toDateString(),
-        updatedAt: new Date().toDateString()
-    }, {
-        title: "At the end of the day its night! ",
-        noteid: "somerandomid2",
-        body: {},
-        category: ["categoryone", "categoryone", "categoryone", "categoryone"],
-        createdAt: new Date().toDateString(),
-        updatedAt: new Date().toDateString()
-    }],
-    loading: false,
+    data: {},
+    loading: true,
     error: false
 }
 
@@ -40,25 +26,36 @@ const noteSlice = createSlice({
     name: "noteslice",
     reducers: {
         addNote: (state, action) => {
-            state.data = [...state.data, action.payload];
+            state.data = { ...state.data, [action.payload?.noteid]: action.payload }
         },
-        updateNode: (state, action) => {
-            const updatedState = state.data;
-            const indexToUpdate = updatedState.map(d => d.noteid == action.payload.noteid).indexOf(true);
-            if (indexToUpdate != -1) updatedState[indexToUpdate] = action.payload;
-            state.data = updatedState;
+        updateNoteTitle: (state, action) => {
+            const newstate = state.data;
+            newstate[action?.payload?.noteid].title = action.payload?.title;
+            state.data = newstate;
+        },
+        updateNoteBody: (state, action) => {
+            const newstate = state.data;
+            newstate[action?.payload?.noteid].body = action.payload?.body;
+            state.data = newstate;
+        },
+        updateNote: (state, action) => {
+            state.data = { ...state.data, [action.payload?.noteid]: action.payload }
         },
         deleteNote: (state, action) => {
-            const updatedState = state.data;
-            const indexToDelete = updatedState.map(d => d.noteid == action.payload.noteid).indexOf(true);
-            updatedState.splice(indexToDelete, 1);
-            state.data = updatedState;
+            const { [action.payload.noteid]: _, ...datatosave } = state.data;
+            state.data = datatosave;
         },
         addNoteAll: (state, action) => {
             state.data = action.payload;
+        },
+        addNodeAllAttach: (state, action) => {
+            state.data = { ...state.data, ...action.payload }
+        },
+        setNoteLoading: (state, action) => {
+            state.loading = typeof action.payload == 'boolean' ? action.payload : state.loading;
         }
     }
 })
 
-export const { addNote, addNoteAll, deleteNote, updateNode } = noteSlice.actions
+export const { addNote, addNoteAll, deleteNote, updateNote, updateNoteBody, updateNoteTitle, addNodeAllAttach, setNoteLoading } = noteSlice.actions
 export default noteSlice.reducer

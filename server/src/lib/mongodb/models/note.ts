@@ -1,6 +1,9 @@
-import { model } from "mongoose";
+import { PaginateModel, model } from "mongoose";
 import noteSchema from "./note.schema";
+import paginate from 'mongoose-paginate-v2';
 
-const NoteModel = model<noteSchema>("notes", noteSchema);
+noteSchema.plugin(paginate);
+
+const NoteModel = model<Note, PaginateModel<Note>>("notes", noteSchema);
 
 export default NoteModel;

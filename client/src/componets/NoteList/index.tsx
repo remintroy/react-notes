@@ -26,7 +26,7 @@ function NoteItem({ note }: { note: Note }) {
         </Flex>
         <Text fz={"sm"} color="dimmed" >
             <Flex justify={"space-between"} >
-                <span>{new Date(note.createdAt || Date.now()).toDateString()} . {note?.category?.map((e, i) => <Text key={i} component="span" transform="capitalize" >{e} </Text>)}</span>
+                <span>{new Date(note.createdAt || Date.now()).toDateString()} . {note?.category?.map((e, i) => <Text key={note?.category?.[i] || i} component="span" transform="capitalize" >{e} </Text>)}</span>
                 <span>Saved</span>
             </Flex>
         </Text>

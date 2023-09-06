@@ -3,9 +3,9 @@ import HomePage from "./pages/Home";
 import { Container } from '@mantine/core';
 import EditNotePage from './pages/EditNote/EditNote';
 import { useGetNotesQuery } from './lib/api/noteApi';
-import { useAppDispatch } from './lib/redux/hooks';
+import { useAppDispatch, useAppSelector } from './lib/redux/hooks';
 import { useEffect } from 'react';
-import { addNodeAllAttach, setNoteLoading } from './lib/redux/slices/noteSlice';
+import { addNodeAllAttach, setNoteLoading, updateMeta } from './lib/redux/slices/noteSlice';
 
 const router = createBrowserRouter([
   {
@@ -19,12 +19,18 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-  const { data, isLoading } = useGetNotesQuery({});
+  const page = useAppSelector(state => state.note.page)
+  const { data, isLoading } = useGetNotesQuery({ page });
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(addNodeAllAttach(data));
-    dispatch(setNoteLoading(isLoading))
+    const newData: any = {};
+    data?.docs?.forEach((note: any) => {
+      newData[note?.noteid] = note;
+    })
+    dispatch(addNodeAllAttach(newData));
+    dispatch(updateMeta(data));
+    dispatch(setNoteLoading(isLoading));
   }, [data, isLoading])
 
   return (

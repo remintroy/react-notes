@@ -15,6 +15,7 @@ export default function UserRouterV1(express: typeof ExpressApp): Router {
     utils
   })
 
+  router.route('/search').get(makeExpressCallback(controller.searchNote))
   router.route('/')
     .post(makeExpressCallback(controller.createNote))
     .get(makeExpressCallback(controller.getNotes))

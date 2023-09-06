@@ -27,6 +27,7 @@
     "express": "^4.18.2",
     "helmet": "^7.0.0",
     "mongoose": "^7.5.0",
+    "mongoose-paginate-v2": "^1.7.31",
     "morgan": "^1.10.0"
   }
 }

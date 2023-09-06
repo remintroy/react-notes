@@ -18,7 +18,7 @@ export default function getConfig() {
       logStyle: "dev",
     },
     cors: {
-      origin: ["*", "http://localhost:3000"],
+      origin: ["*", "http://localhost:3000", "notes.dynotxt.com"],
       credentials: true,
     },
   };

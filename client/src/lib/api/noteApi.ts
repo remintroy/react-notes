@@ -36,6 +36,11 @@ const noteApiSlice = createApi({
                 body: { noteid }
             }),
             invalidatesTags: ["notes"]
+        }),
+        searchNote: builder.query({
+            query: ({ searchQuery }) => ({
+                url: `/search?query=${searchQuery}`,
+            })
         })
     })
 });
@@ -45,4 +50,4 @@ export const noteApiReducer = noteApiSlice.reducer;
 export const noteApiReducerPath = noteApiSlice.reducerPath;
 export const noteApiMiddleware = noteApiSlice.middleware;
 
-export const { useCreateNoteMutation, useUpdateNoteMutation, useDeleteNoteMutation, useGetNoteQuery, useGetNotesQuery } = noteApiSlice;
+export const { useCreateNoteMutation, useUpdateNoteMutation, useDeleteNoteMutation, useGetNoteQuery, useGetNotesQuery, useSearchNoteQuery } = noteApiSlice;

@@ -11,12 +11,16 @@ export interface Note {
 
 interface InitalState {
     data: Record<string, Note>,
+    meta: object;
+    page: number;
     error: boolean;
     loading: boolean;
 }
 
 const initialState: InitalState = {
     data: {},
+    meta: {},
+    page: 1,
     loading: true,
     error: false
 }
@@ -27,6 +31,12 @@ const noteSlice = createSlice({
     reducers: {
         addNote: (state, action) => {
             state.data = { ...state.data, [action.payload?.noteid]: action.payload }
+        },
+        updateMeta: (state, action) => {
+            state.meta = action.payload;
+        },
+        updatePage: (state, action) => {
+            state.page = action.payload;
         },
         updateNoteTitle: (state, action) => {
             const newstate = state.data;
@@ -62,5 +72,5 @@ const noteSlice = createSlice({
     }
 })
 
-export const { addNote, addNoteAll, deleteNote, updateNote, updateNoteBody, updateNoteTitle, addNodeAllAttach, setNoteLoading, updateNoteCategory } = noteSlice.actions
+export const { addNote, updateMeta, updatePage, addNoteAll, deleteNote, updateNote, updateNoteBody, updateNoteTitle, addNodeAllAttach, setNoteLoading, updateNoteCategory } = noteSlice.actions
 export default noteSlice.reducer

@@ -33,8 +33,8 @@ function NoteItem({ note }: { note: Note }) {
     </Paper>
 }
 
-export default function NoteList() {
-    const notes = useAppSelector(state => state.note.data);
+export default function NoteList({ data }: { data?: any }) {
+    const notes = data || useAppSelector(state => state.note.data);
     const loading = useAppSelector(state => state.note.loading)
 
     return <Flex direction={"column"} gap={10}>
@@ -44,7 +44,7 @@ export default function NoteList() {
             <Skeleton visible={loading} w={"100%"} h={50}></Skeleton>
         </>}
         <Grid>
-            {Object.keys(notes).map(key => {
+            {Object.keys(notes)?.map(key => {
                 const note = notes[key];
                 return <Grid.Col key={note.noteid}><NoteItem note={note} /></Grid.Col>
             })}

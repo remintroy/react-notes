@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, Paper, Text } from "@mantine/core";
+import { Box, Button, Flex, Input, Kbd, Paper, Text } from "@mantine/core";
 import { IconPlus, IconSearch } from '@tabler/icons-react'
 import NoteList from "../../componets/NoteList";
 import { addNote, updatePage } from "../../lib/redux/slices/noteSlice";
@@ -38,10 +38,14 @@ export default function HomePage() {
         <Paper>
             <Flex align={"center"} justify={"space-between"}>
                 <Text fz={"lg"} fw={'bold'}>   N4-Note {"(beta)"} </Text>
-                <Flex align={"center"} gap={10}>
+                <Flex align={"center"} gap={10}> 
                     <Button leftIcon={< IconPlus size="1rem" />} onClick={handleCreateNote}>New note</Button>
                     {/* <Button variant="default">Login</Button> */}
                 </Flex>
+            </Flex>
+            <Flex  align={"center"} gap={10}>
+                <Kbd>Theme: ctrl+j</Kbd>
+                <Kbd>Fullscreen: ctrl+f</Kbd>
             </Flex>
         </Paper>
         <Box mt={10} />

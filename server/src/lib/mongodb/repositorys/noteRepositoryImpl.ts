@@ -30,6 +30,7 @@ export default class NoteRepositoryImpl implements NoteRepository {
       const regex = new RegExp(`^${searchQuery}`, 'gi');
 
       return await NoteModel.find({
+        deleted: false,
         $or: [
           { title: regex },
           { category: { $elemMatch: { $regex: regex } } },

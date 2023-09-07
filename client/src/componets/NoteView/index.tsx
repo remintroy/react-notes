@@ -1,4 +1,4 @@
-import { Autocomplete, Badge, Box, Flex, Text, Textarea } from "@mantine/core";
+import { Autocomplete, Badge, Box, Flex, Loader, Text, Textarea } from "@mantine/core";
 import Editor from "../Editor";
 import { useAppDispatch, useAppSelector } from "../../lib/redux/hooks";
 import { updateNote, updateNoteBody, updateNoteCategory, updateNoteTitle } from "../../lib/redux/slices/noteSlice";
@@ -15,9 +15,9 @@ export default function NoteView({ noteid }: { noteid: string }) {
 
     const setTitle = (title: string) => { if (title) dispatch(updateNoteTitle({ noteid: noteid, title })); }
     const setBody = (body: string) => { if (body) dispatch(updateNoteBody({ noteid: noteid, body })); }
-    const setCategory = (categorys: string[]) => { if (categorys) dispatch(updateNoteCategory({ noteid, category:categorys })) }
+    const setCategory = (categorys: string[]) => { if (categorys) dispatch(updateNoteCategory({ noteid, category: categorys })) }
     const [updateNoteApi] = useUpdateNoteMutation();
-    const [saving, setSaving] = useState(false)
+    const [saving, setSaving] = useDebouncedState(false, 300);
 
     const [titleValue, setTitleValue] = useDebouncedState(note?.title, 500)
     const [bodyValue, setBodyValue] = useDebouncedState(note?.body, 500)
@@ -82,7 +82,7 @@ export default function NoteView({ noteid }: { noteid: string }) {
                 <Text fz={"sm"} color="dimmed">
                     <Flex justify={"space-between"}>
                         <span>Today 8:50PM . {note?.category?.join(" ")}</span>
-                        <span>{saving ? "Saving" : "Saved"}</span>
+                        <span><Flex gap={10}>{saving ? "Saving" : "Saved"} {saving && <Loader size={"xs"} />}</Flex></span>
                     </Flex>
                 </Text>
 
